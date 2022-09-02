@@ -13,11 +13,19 @@ const SocketHandler = (req, res) => {
     res.socket.server.io = io;
 
     io.on("connection", (socket) => {
-      socket.on("input-change", (msg) => {
-        socket.broadcast.emit("update-input", msg);
+      socket.on("join-room", (room) => {
+        socket.join(room);
+        console.log("someone joined room " + room);
       });
-      socket.on("clipboard-change", (msg) => {
-        socket.broadcast.emit("update-clipboard", msg);
+      socket.on("leave-room", (room) => {
+        socket.leave(room);
+        console.log("someone left room " + room);
+      });
+      socket.on("input-change", (data) => {
+        socket.broadcast.to(data.room.name).emit("update-input", data.msg);
+      });
+      socket.on("clipboard-change", (data) => {
+        socket.broadcast.to(data.room.name).emit("update-clipboard", data.msg);
       });
     });
   }

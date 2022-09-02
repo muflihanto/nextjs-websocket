@@ -2,11 +2,21 @@
   "name": "nextjs-websocket",
   "version": "0.1.0",
   "private": true,
+  "bin": "server.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
+  },
+  "pkg": {
+    "assets": [
+      ".next/**/*",
+      "public/**/*"
+    ],
+    "scripts": [
+      ".next/**/*.js"
+    ]
   },
   "dependencies": {
     "@chakra-ui/react": "^2.2.9",
